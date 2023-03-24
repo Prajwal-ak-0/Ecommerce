@@ -3,7 +3,7 @@ import Layout from '../../components/Layout/Layout'
 import axios from 'axios'
 import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
-import authStyles from '../../styles/authStyles.css'
+import '../../styles/authStyles.css'
 
 const Register = () => {
     const [name,setname]=useState("")
@@ -13,13 +13,13 @@ const Register = () => {
     const [address,setaddress]=useState("")
     const navigate = useNavigate();
 
-    const handleSubmit= async(e)=>{
+    const handleSubmit= async (e)=>{
         e.preventDefault();
         try {
             const res=await axios.post("/api/v1/auth/register",{name,email,password,phone,address
             });
-            if(res.data.success){
-                toast.success(res.data.message);
+            if(res && res.data.success){
+                toast.success(res.data && res.data.message);
                 navigate("/login");
             }
             else{
@@ -32,9 +32,9 @@ const Register = () => {
     }
   return (
     <Layout title="Register">
-        <div className="form-container">
-            <h1>Register Form</h1>
+        <div className="form-container" style={{ minHeight: "90vh" }}>
             <form onSubmit={handleSubmit}>
+                <h4 className='title'>Register Form</h4>
                 <div>
                 <div className="mb-3">
                     <input type="text" 
@@ -72,7 +72,7 @@ const Register = () => {
                     className="form-control" id="exampleInputAddress" placeholder='Address'
                     required />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">REGISTER</button>
                 </div>
             </form>
         </div>

@@ -1,10 +1,22 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import {GiShoppingBag} from "react-icons/gi"
+import {useAuth} from "../../context/auth"
+import toast from "react-hot-toast"
 const Header = () => {
+  const [auth,setAuth]=useAuth();
+  const handleLogout=()=>{
+    setAuth({
+      ...auth,
+      user:null,
+      token:""
+    })
+    localStorage.removeItem('auth')
+    toast.success("Logout successfully")
+  }
   return (
     <div>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
             <NavLink className="navbar-brand" ><GiShoppingBag/> No-Brand</NavLink>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,12 +30,18 @@ const Header = () => {
                 <li className="nav-item">
                 <NavLink  to="/category" className="nav-link " aria-current="page" >Category</NavLink>
                 </li>
-                <li className="nav-item">
-                <NavLink  to="/register" className="nav-link " aria-current="page" >Sign Up</NavLink>
-                </li>
-                <li className="nav-item">
-                <NavLink  to="/login" className="nav-link " aria-current="page" >Login</NavLink>
-                </li>
+                {
+                  !auth.user ? (<><li className="nav-item">
+                  <NavLink  to="/register" className="nav-link " aria-current="page" >Sign Up</NavLink>
+                  </li>
+                  <li className="nav-item">
+                  <NavLink  to="/login" className="nav-link " aria-current="page" >Login</NavLink>
+                  </li></>)
+                   : 
+                   (<li className="nav-item">
+                  <NavLink onClick={handleLogout} to="/login" className="nav-link " aria-current="page" >LogOut</NavLink>
+                  </li>)
+                }
                 <li className="nav-item">
                 <NavLink  to="/cart" className="nav-link " aria-current="page" >Cart(0)</NavLink>
                 </li>

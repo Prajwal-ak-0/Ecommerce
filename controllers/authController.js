@@ -61,7 +61,7 @@ export const loginController=async (req,res)=>{
             })
         }
         const user=await userModel.findOne({email})
-        if(!email){
+        if(!user){
             return res.status(404).send({
                 success:false,
                 message:"Email is not registerd"
@@ -87,7 +87,7 @@ export const loginController=async (req,res)=>{
                 phone:user.phone,
                 address:user.address
             },
-            token,
+            token
         })
     } catch (error) {
         console.log(error)
