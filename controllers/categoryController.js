@@ -6,14 +6,14 @@ export const createCategoryController=async (req,res)=>{
         if(!name){
             return res.status(401).send({message:"Name is required"})
         }
-        const existingCategory=await ss.findOne({name})
+        const existingCategory=await categoryModels.findOne({name})
         if(existingCategory){
             return res.status(200).send({
                 success:true,
                 message:"Categpry already Exist"
             })
         }
-        const category=await new ss({name,slug:slugify(name)}).save()
+        const category=await new categoryModels({name,slug:slugify(name)}).save()
         res.status(201).send({
             success:true,
             message:"new category created",
