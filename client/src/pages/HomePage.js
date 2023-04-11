@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
+import SimpleImageSlider from "react-simple-image-slider";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -12,6 +14,27 @@ const HomePage = () => {
   const [total,setTotal]=useState(0);
   const [page,setPage]=useState(1);
   const [loading,setLoading]=useState(false);
+
+
+  const navigate=useNavigate();
+  /***********************Demo***************/
+  // const options = {
+  //   method: 'GET',
+  //   url: 'https://aliexpress-datahub.p.rapidapi.com/item_search_promotion_deals',
+  //   params: {page: '1'},
+  //   headers: {
+  //     'X-RapidAPI-Key': '9acef659e4mshc8d76aa81a52888p19b689jsnc73c8646d7e1',
+  //     'X-RapidAPI-Host': 'aliexpress-datahub.p.rapidapi.com'
+  //   }
+  // };
+
+  // axios.request(options).then(function (response) {
+  //   console.log(response.data.result.resultList.item);
+  // }).catch(function (error) {
+  //   console.error(error);
+  // });
+  
+  /***********************Demo***************/
 
   const getAllCategory = async () => {
     try {
@@ -147,7 +170,7 @@ const HomePage = () => {
                     {p.description.substring(0, 30)}...
                   </p>
                   <p className="card-text">{p.price}</p>
-                  <button className="btn btn-primary ms-1">More Details</button>
+                  <button className="btn btn-primary ms-1" onClick={()=>navigate(`/product/${p.slug}`)}>More Details</button>
                   <button className="btn btn-secondary ms-1">
                     Add to Cart
                   </button>
